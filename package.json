@@ -1,0 +1,25 @@
+{
+  "name": "tasty-avocado",
+  "version": "1.0.0",
+  "description": "Web Project Calendar by Emil and Lucas",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebProjectLucasEmil/tasty-avocado.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WebProjectLucasEmil/tasty-avocado/issues"
+  },
+  "homepage": "https://github.com/WebProjectLucasEmil/tasty-avocado#readme"
+}
