@@ -5,11 +5,15 @@ const expressHandlebars = require('express-handlebars')
 
 const app = express()
 
+
 app.engine(".hbs", expressHandlebars({
   defaultLayout: "main.hbs"
 }))
 
-app.use(express.static("static"))
+app.use(express.static("src/static"))
+
+app.set("views", "src" + "/views")
+
 app.use(express.static("./public/images"))
 
 app.get('/', function(request, response){
