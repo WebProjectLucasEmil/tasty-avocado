@@ -5,10 +5,26 @@ const expressSession = require('express-session')
 const bodyParser = require('body-parser')
 const bcrypt = require('bcryptjs')
 const token = require('csurf')
+const sqlite3 = require("sqlite3")
+const SQLiteStore = require('connect-sqlite3')(expressSession)
 // const nodemon = require('nodemon')
+
+const csrfProtection = token({ cookie: false})
+const parseForm = bodyParser.urlencoded ({extended: false})
 
 const app = express()
 
+app.use(expressSession({
+  secret: "asdkjfhzcxvhjgasdfjhagsdcivo",
+  saveUninitialized: false,
+  resave: false,
+  store: new SQLiteStore({
+    db: "sessions.db"
+  })
+}))
+
+const adminUsername = "admin"
+const adminPassword = "$2a$10$.WNk7GjUq5cBvbWbuXVO5Ok8ksPm4y5TTLZOY3GajRXC.ECn6PyZ6"
 
 app.engine(".hbs", expressHandlebars({
   defaultLayout: "main.hbs"
