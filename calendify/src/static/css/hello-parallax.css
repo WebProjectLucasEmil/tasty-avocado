@@ -97,3 +97,7 @@ input {
 input::placeholder {
   color: white !important;
 }
+
+.a{
+  color: turquoise
+}
