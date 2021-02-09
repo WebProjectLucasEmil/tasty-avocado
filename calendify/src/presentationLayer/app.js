@@ -3,14 +3,18 @@ const express = require('express')
 const expressHandlebars = require('express-handlebars')
 const expressSession = require('express-session')
 const bodyParser = require('body-parser')
-const bcrypt = require('bcryptjs')
+
 const token = require('csurf')
 const sqlite3 = require("sqlite3")
 const SQLiteStore = require('connect-sqlite3')(expressSession)
+
+
+const loginRouter = require("./login-router.js")
+
 // const nodemon = require('nodemon')
 
-const csrfProtection = token({ cookie: false})
-const parseForm = bodyParser.urlencoded ({extended: false})
+const csrfProtection = token({ cookie: false })
+const parseForm = bodyParser.urlencoded({ extended: false })
 
 const app = express()
 
@@ -32,7 +36,7 @@ app.engine(".hbs", expressHandlebars({
 
 app.use(express.static("src/static"))
 
-app.set("views", "src" + "/views")
+app.set("views", "src" , "presentationLayer" + "/views")
 
 app.use(express.static("./public/images"))
 
@@ -40,10 +44,29 @@ app.use(bodyParser.urlencoded({
   extended: false
 }))
 
-app.get("/", csrfProtection, function (request, response) {
-  response.render("index.hbs", {token: request.csrfToken()})
+app.use(function (request, response, next) {
+  const isLoggedIn = request.session.isLoggedIn
+
+  response.locals.isLoggedIn = isLoggedIn
+  next()
 })
 
-app.listen(8080, function() {
+app.get("/", csrfProtection, function (request, response) {
+  response.render("index.hbs", { token: request.csrfToken() })
+})
+
+app.post("/", csrfProtection, parseForm, function (request, response) {
+  //login
+  loginRouter.login()
+})
+
+app.post("/logout", csrfProtection, parseForm, function (request, response) {
+  request.session.isLoggedIn = false
+  console.log("never gonna let you down...")
+  response.redirect("/")
+})
+
+
+app.listen(8080, function () {
   console.log("listen port your mom")
 })
