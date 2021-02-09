@@ -3,10 +3,14 @@ const express = require('express')
 const expressHandlebars = require('express-handlebars')
 const expressSession = require('express-session')
 const bodyParser = require('body-parser')
-const bcrypt = require('bcryptjs')
+
 const token = require('csurf')
 const sqlite3 = require("sqlite3")
 const SQLiteStore = require('connect-sqlite3')(expressSession)
+
+
+const loginRouter = require("./login-router.js")
+
 // const nodemon = require('nodemon')
 
 const csrfProtection = token({ cookie: false })
@@ -23,10 +27,8 @@ app.use(expressSession({
   })
 }))
 
-//! DON'T FORGET TO MOVE THIS TO APPROPIATE LOG IN LAYER(if it isn't already, kek)--------------
 const adminUsername = "admin"
 const adminPassword = "$2a$10$.WNk7GjUq5cBvbWbuXVO5Ok8ksPm4y5TTLZOY3GajRXC.ECn6PyZ6"
-//!--------------------------------------------------------------------------------------
 
 app.engine(".hbs", expressHandlebars({
   defaultLayout: "main.hbs"
@@ -34,7 +36,7 @@ app.engine(".hbs", expressHandlebars({
 
 app.use(express.static("src/static"))
 
-app.set("views", "src" + "/views")
+app.set("views", "src" , "presentationLayer" + "/views")
 
 app.use(express.static("./public/images"))
 
@@ -54,20 +56,8 @@ app.get("/", csrfProtection, function (request, response) {
 })
 
 app.post("/", csrfProtection, parseForm, function (request, response) {
-  //TODO: Re-structure login to appropiate layer, also only admin atm. Needs to be fixed as well.
-  const enteredUsername = request.body.username
-  const enteredPassword = request.body.password
-
-  const checkPassword = bcrypt.compareSync(enteredPassword, adminPassword)
-
-  if (enteredUsername == adminUsername && checkPassword) {
-    //Login
-    request.session.isLoggedIn = true
-    console.log("never gonna give you up...")
-    response.redirect("/")
-  } else {
-    //TODO:display error message to user
-  }
+  //login
+  loginRouter.login()
 })
 
 app.post("/logout", csrfProtection, parseForm, function (request, response) {
