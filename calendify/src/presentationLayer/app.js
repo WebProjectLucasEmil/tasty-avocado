@@ -8,10 +8,9 @@ const token = require('csurf')
 const sqlite3 = require("sqlite3")
 const SQLiteStore = require('connect-sqlite3')(expressSession)
 
-
-const loginRouter = require("./login-router.js")
-
-// const nodemon = require('nodemon')
+//routers------------------------------------------------------
+var loginRouter = require("./routers/login-router")
+const loginManager = require("../../businessLayer/login-manager")
 
 const csrfProtection = token({ cookie: false })
 const parseForm = bodyParser.urlencoded({ extended: false })
@@ -34,9 +33,10 @@ app.engine(".hbs", expressHandlebars({
   defaultLayout: "main.hbs"
 }))
 
-app.use(express.static("src/static"))
+// app.use(express.static("src/static"))
+app.use(express.static(__dirname + '/public'));
 
-app.set("views", "src" , "presentationLayer" + "/views")
+app.set("views", "src" + "/views")
 
 app.use(express.static("./public/images"))
 
@@ -57,7 +57,7 @@ app.get("/", csrfProtection, function (request, response) {
 
 app.post("/", csrfProtection, parseForm, function (request, response) {
   //login
-  loginRouter.login()
+  loginRouter.loginRout()
 })
 
 app.post("/logout", csrfProtection, parseForm, function (request, response) {
