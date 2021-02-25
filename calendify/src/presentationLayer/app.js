@@ -11,6 +11,9 @@ const SQLiteStore = require('connect-sqlite3')(expressSession)
 
 const loginRouter = require("./login-router.js")
 
+
+const createAccountRouter = require('./create-account-router.js')
+
 // const nodemon = require('nodemon')
 
 const csrfProtection = token({ cookie: false })
@@ -19,54 +22,62 @@ const parseForm = bodyParser.urlencoded({ extended: false })
 const app = express()
 
 app.use(expressSession({
-  secret: "asdkjfhzcxvhjgasdfjhagsdcivo",
-  saveUninitialized: false,
-  resave: false,
-  store: new SQLiteStore({
-    db: "sessions.db"
-  })
+    secret: "asdkjfhzcxvhjgasdfjhagsdcivo",
+    saveUninitialized: false,
+    resave: false,
+    store: new SQLiteStore({
+        db: "sessions.db"
+    })
 }))
 
 const adminUsername = "admin"
 const adminPassword = "$2a$10$.WNk7GjUq5cBvbWbuXVO5Ok8ksPm4y5TTLZOY3GajRXC.ECn6PyZ6"
 
 app.engine(".hbs", expressHandlebars({
-  defaultLayout: "main.hbs"
+    defaultLayout: "main.hbs"
 }))
 
-app.use(express.static("src/static"))
+//app.use(express.static("/css"))
+app.use(express.static(__dirname + '/public'));
 
-app.set("views", "src" , "presentationLayer" + "/views")
+app.set("views", "src" + "/views")
 
 app.use(express.static("./public/images"))
 
 app.use(bodyParser.urlencoded({
-  extended: false
+    extended: false
 }))
 
-app.use(function (request, response, next) {
-  const isLoggedIn = request.session.isLoggedIn
+app.use(function(request, response, next) {
+    const isLoggedIn = request.session.isLoggedIn
 
-  response.locals.isLoggedIn = isLoggedIn
-  next()
+    response.locals.isLoggedIn = isLoggedIn
+    next()
 })
 
-app.get("/", csrfProtection, function (request, response) {
-  response.render("index.hbs", { token: request.csrfToken() })
+app.get("/", csrfProtection, function(request, response) {
+    response.render("index.hbs", { token: request.csrfToken() })
 })
 
-app.post("/", csrfProtection, parseForm, function (request, response) {
-  //login
-  loginRouter.login()
+app.post("/", csrfProtection, parseForm, function(request, response) {
+    //login
+    loginRouter.login()
 })
 
-app.post("/logout", csrfProtection, parseForm, function (request, response) {
-  request.session.isLoggedIn = false
-  console.log("never gonna let you down...")
-  response.redirect("/")
+app.post("/logout", csrfProtection, parseForm, function(request, response) {
+    request.session.isLoggedIn = false
+    console.log("never gonna let you down...")
+    response.redirect("/")
+})
+
+app.get("/createAccount", csrfProtection, function(request, response) {
+    response.render("createAccount.hbs", { token: request.csrfToken() })
+})
+app.post("/createAccount", function(request, response) {
+
 })
 
 
-app.listen(8080, function () {
-  console.log("listen port your mom")
+app.listen(8080, function() {
+    console.log("listen port your mom")
 })
