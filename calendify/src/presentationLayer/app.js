@@ -70,13 +70,13 @@ app.post("/logout", csrfProtection, parseForm, function(request, response) {
     response.redirect("/")
 })
 
-app.get("/createAccount", csrfProtection, function(request, response) {
+app.get("/createAccount.hbs", csrfProtection, function(request, response) {
     response.render("createAccount.hbs", { token: request.csrfToken() })
 })
+
 app.post("/createAccount", function(request, response) {
 
 })
-
 
 app.listen(8080, function() {
     console.log("listen port your mom")
