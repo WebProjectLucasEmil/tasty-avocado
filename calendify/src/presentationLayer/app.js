@@ -9,10 +9,14 @@ const sqlite3 = require("sqlite3")
 const SQLiteStore = require('connect-sqlite3')(expressSession)
 
 
-const loginRouter = require("./login-router.js")
+const loginRouter = require("./routers/login-router.js")
+const createAccountRouter = require("./routers/create-account-router.js")
+const createAccountManager = require("../businessLayer/create-account-manager.js")
+const createAccountRepository = require("../dataAccessLayer/create-account-repository")
+    //app.use(loginRouter)
+    //app.use(createAccountRouter)
 
-
-const createAccountRouter = require('./create-account-router.js')
+//const createAccountRouter = require('./routers/create-account-router.js')
 
 // const nodemon = require('nodemon')
 
@@ -75,9 +79,10 @@ app.get("/createAccount.hbs", csrfProtection, function(request, response) {
 })
 
 app.post("/createAccount", function(request, response) {
+    createAccountRouter.createAccount()
 
 })
 
 app.listen(8080, function() {
-    console.log("listen port your mom")
+    console.log("listen port 8080 nice")
 })
