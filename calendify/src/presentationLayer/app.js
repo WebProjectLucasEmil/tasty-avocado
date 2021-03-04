@@ -10,7 +10,6 @@ const SQLiteStore = require('connect-sqlite3')(expressSession)
 
 //routers------------------------------------------------------
 var loginRouter = require("./routers/login-router")
-const loginManager = require("../../businessLayer/login-manager")
 
 const csrfProtection = token({ cookie: false })
 const parseForm = bodyParser.urlencoded({ extended: false })
@@ -36,7 +35,7 @@ app.engine(".hbs", expressHandlebars({
 // app.use(express.static("src/static"))
 app.use(express.static(__dirname + '/public'));
 
-app.set("views", "src" + "/views")
+app.set("views", "src" + "/presentationlayer/views")
 
 app.use(express.static("./public/images"))
 

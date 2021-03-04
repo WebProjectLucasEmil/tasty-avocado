@@ -2,7 +2,7 @@
   "name": "tasty-avocado",
   "version": "1.0.0",
   "description": "Web Project Calendar by Emil and Lucas",
-  "main": "app.js",
+  "main": "./src/presentationLayer/app.js",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -16,7 +16,7 @@
     "sqlite3": "^4.2.0"
   },
   "scripts": {
-    "start": "nodemon -L src/app.js",
+    "start": "nodemon -L ./calendify/src/presentationLayer/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
