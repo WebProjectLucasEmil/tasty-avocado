@@ -59,6 +59,10 @@ app.post("/", csrfProtection, parseForm, function (request, response) {
   loginRouter.loginRout()
 })
 
+app.get("/create-account", csrfProtection, function(request, response){
+  response.render("create-account.hbs", {token: request.csrfToken() })
+})
+
 app.post("/logout", csrfProtection, parseForm, function (request, response) {
   request.session.isLoggedIn = false
   console.log("never gonna let you down...")
