@@ -13,7 +13,8 @@
     "express-session": "^1.17.1",
     "nodemon": "^2.0.7",
     "popups": "^1.1.3",
-    "sqlite3": "^4.2.0"
+    "sqlite3": "^4.2.0",
+    "mysql": "^2.18.1"
   },
   "scripts": {
     "start": "nodemon -L ./calendify/src/presentationLayer/app.js",
