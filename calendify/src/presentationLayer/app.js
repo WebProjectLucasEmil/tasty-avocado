@@ -17,6 +17,7 @@ const bodyParser = require('body-parser')
 //routers------------------------------------------------------
 const variousRouter = require('./routers/various-router')
 const loginRouter = require("./routers/login-router")
+const createAccountRouter = require("./routers/create-account-router")
 //-------------------------------------------------------------
 
 const app = express()
@@ -37,10 +38,9 @@ app.use(bodyParser.urlencoded({
   extended: false
 }))
 
-
 app.use('/', variousRouter)
 app.use('/account', loginRouter)
-
+app.use('/create-account', createAccountRouter)
 
 app.listen(8080, function () {
   console.log("listen port your mom")
