@@ -1,20 +1,21 @@
-const MIN_EMAIL_LENGTH = 6
-const MAX_EMAIL_LENGTH = 30
+const MIN_USERNAME_LENGTH = 3
+const MAX_USERNAME_LENGTH = 15
 
 
 
-
-exports.validateEmail = function(account){
-    const errors = []
-    var mailformat = "/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/";
-    if (accoun.email.match(mailformat)) {
-        alert("Valid email address!");
-        return true;
-    }
-    else {
-        errors.push("You have entered an invalid email address!");
-        return errors;
-    }
+exports.getErrorsNewAccount = function(account){
+	const errors = []
+	
+	// Validate username.
+	if(!account.hasOwnProperty("username")){
+		errors.push("usernameMissing")
+	}else if(account.username.length< MIN_USERNAME_LENGTH){
+		errors.push("usernameTooShort")
+	}else if(MAX_USERNAME_LENGTH < account.username.length){
+		errors.push("usernameTooLong")
+	}
+	
+	return errors
 }
 
 

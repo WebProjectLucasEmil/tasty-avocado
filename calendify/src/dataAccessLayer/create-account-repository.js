@@ -22,22 +22,23 @@ exports.getAllAccounts = function (callback) {
 exports.createAccount = function (account, callback) {
 
 	errors = []
-	const query = `INSERT INTO accounts (email, password) VALUES (?, ?)`
-	const values = [account.email, account.password]
-	if (val.validateEmail(account) != true) {
-		errors = val.validateEmail(account)
-	} else {
-		db.query(query, values, function (error, results) {
-			if (error) {
-				// TODO: Look for usernameUnique violation.
-				if (exports.getAccountByEmail(account.email, callback) != null)
-					callback(['databaseError'], null)
-			} else {
-				callback([], results.insertId)
+	const query = `INSERT INTO accounts (name, username, password) VALUES (?, ?, ?)`
+	const values = [account.name, account.username, account.password]
+
+	db.query(query, values, function(error, results){
+		if(error){
+			console.log(error)
+			if(error.sqlMessage.includes("usernameUnique")){
+				callback(['usernameTaken'], null)
+			}else{
+				callback(['internalError'], null)
 			}
-		})
-	}
+		}else{
+			callback([], results.insertId)
+		}
+	})
 }
+
 /*
 	Retrieves the account with the given username.
 	Possible errors: databaseError
