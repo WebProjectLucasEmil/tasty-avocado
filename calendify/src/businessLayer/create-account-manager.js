@@ -1,4 +1,5 @@
 const createAccountRepository = require('../dataAccessLayer/create-account-repository')
+const accountValidator = require('./account-validator')
 
 exports.createAccount = function(account, callback){
 	
@@ -10,6 +11,7 @@ exports.createAccount = function(account, callback){
 		return
 	}
 	
-	accountRepository.createAccount(account, callback)
+	//Database shit
+	createAccountRepository.createAccount(account, callback)
 	
 }
