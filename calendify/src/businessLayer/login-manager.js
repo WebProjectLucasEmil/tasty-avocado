@@ -12,7 +12,7 @@ function loginMan(enteredUsername, enteredPassword, isLoggedIn){
  
     if (enteredUsername == adminUsername && checkPassword) {
       //Login
-      isLoggedIn = true
+      //isLoggedIn = true
       console.log("never gonna give you up...")
       response.redirect("/")
     } else {
