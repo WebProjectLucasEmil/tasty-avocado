@@ -47,6 +47,7 @@ app.use(bodyParser.urlencoded({
 //Attatch all routers---------------
 app.use('/', variousRouter)
 app.use('/account', loginRouter)
+app.use('/create-account', createAccountRouter)
 //----------------------------------
 
 //* If using proxy (e.g nginx)
@@ -103,10 +104,6 @@ app.use((req, res, next) =>{
 
 // })
 
-
-app.use('/', variousRouter)
-app.use('/account', loginRouter)
-app.use('/create-account', createAccountRouter)
 
 
 app.listen(8080, function () {
