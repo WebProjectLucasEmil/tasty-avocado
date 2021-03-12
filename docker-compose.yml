@@ -1,5 +1,16 @@
 version: "3.8"
-services: 
+#Generate services needed
+services:
+  redis:
+    container_name: redis
+    image: redis:alpine
+    #Add the custom conf file to use and add a custom password (mypassword)
+    command: redis-server /usr/local/etc/redis/redis.conf --requirepass mypassword
+    ports:
+      - 6379:6379
+    #Map the volumes to use the custom conf file from this project.
+    volumes:
+      - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
   website:
     build: ./calendify
     ports: 
