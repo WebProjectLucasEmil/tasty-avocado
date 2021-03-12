@@ -25,6 +25,7 @@ const RedisStore = connectRedis(session)
 //routers------------------------------------------------------
 const variousRouter = require('./routers/various-router')
 const loginRouter = require("./routers/login-router")
+const createAccountRouter = require("./routers/create-account-router")
 //-------------------------------------------------------------
 
 const app = express()
@@ -41,6 +42,7 @@ app.use(express.static("./public/images"))
 app.use(bodyParser.urlencoded({
   extended: false
 }))
+
 
 //Attatch all routers---------------
 app.use('/', variousRouter)
@@ -100,6 +102,11 @@ app.use((req, res, next) =>{
 // (req,res) =>{
 
 // })
+
+
+app.use('/', variousRouter)
+app.use('/account', loginRouter)
+app.use('/create-account', createAccountRouter)
 
 
 app.listen(8080, function () {
