@@ -13,7 +13,7 @@
 const { response, Router, request } = require('express')
 const express = require('express')
 const expressHandlebars = require('express-handlebars')
-const bodyParser = require('body-parser')
+
 
 
 const session = require("express-session")
@@ -39,9 +39,7 @@ app.engine(".hbs", expressHandlebars({
 app.use(express.static(__dirname + '/public'));
 app.set("views", "src" + "/presentationlayer/views")
 app.use(express.static("./public/images"))
-app.use(bodyParser.urlencoded({
-  extended: false
-}))
+
 
 
 //Attatch all routers---------------
@@ -63,6 +61,7 @@ const redisClient = redis.createClient({
   password: "mypassword"
 })
 
+
 //*2 Configure session middleware
 app.use(session({
   store: new RedisStore({client: redisClient}),
@@ -76,29 +75,11 @@ app.use(session({
   }
 }))
 
-//*3 create an unprotected login endpoint
-app.post('/login', (req, res) =>{
-  const {username, password} = req
-  //TODO: check if the credentials are correct
-  //TODO:...
 
-  //Assume the credentials are correct
-  req.session.clientId = "abc123"
-  req.session.myNum = 5
-
-  res.json("You are now logged in")
-
-})
 
 //*4 plug in another middleware that will check if the user is authenticated or not
 //* all requests that are plugged in will after this middleware will only be accessible if the user is logged in
-app.use((req, res, next) =>{
-  if (!req.session || !req.session.clientId) {
-    const err = new Error("You shall not pass!")
-    err.statusCode = 401
-    next(err)
-  }
-})
+
 
 //*5 plug in all routes that the user can only access if logged in
 //*eg:
