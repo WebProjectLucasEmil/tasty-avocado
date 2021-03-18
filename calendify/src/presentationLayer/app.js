@@ -50,6 +50,9 @@ app.use('/account', loginRouter)
 app.use('/create-account', createAccountRouter)
 //----------------------------------
 
+
+
+
 //* If using proxy (e.g nginx)
 // app.set("trust proxy",1)
 
@@ -75,7 +78,7 @@ app.use(session({
 
 //*3 create an unprotected login endpoint
 app.post('/login', (req, res) =>{
-  const {email, password} = req
+  const {username, password} = req
   //TODO: check if the credentials are correct
   //TODO:...
 
@@ -91,7 +94,7 @@ app.post('/login', (req, res) =>{
 //* all requests that are plugged in will after this middleware will only be accessible if the user is logged in
 app.use((req, res, next) =>{
   if (!req.session || !req.session.clientId) {
-    const err = new error("You shall not pass!")
+    const err = new Error("You shall not pass!")
     err.statusCode = 401
     next(err)
   }

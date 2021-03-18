@@ -9,18 +9,18 @@ const loginManager = require("../../businessLayer/login-manager")
 const router = express.Router()
 
 
-// router.post("/login", parseForm, function (request, response) {
-//   //login
+router.post("/login", parseForm, function (request, response) {
+  //login
 
-//   const enteredUsername = request.body.username
-//   const enteredPassword = request.body.password
-//   loginManager.loginRout(enteredUsername, enteredPassword, isLoggedIn)
-// })
+  const enteredUsername = request.body.username
+  const enteredPassword = request.body.password
+  loginManager.loginMan(enteredUsername, enteredPassword)
+})
 
 
 
 router.post("/logout", parseForm, function (request, response) {
-  request.session.isLoggedIn = false
+  // request.session.isLoggedIn = false
   console.log("never gonna let you down...")
   response.redirect("/")
 })

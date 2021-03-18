@@ -3,7 +3,16 @@ const express = require('express')
 const expressSession = require('express-session')
 const app = express()
 
+function getAdminUsername (){
+  const adminUsername = "admin"
+  return adminUsername
+}
 
+function getAdminPassword(){
+  const adminPassword = "abc123"
+  return adminPassword
+}
+module.exports = {getAdminUsername,getAdminPassword}
 
 // exports.session= function (callback){
 //   app.use(expressSession({
